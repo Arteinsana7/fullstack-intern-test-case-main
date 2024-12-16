@@ -1,6 +1,7 @@
 export type Course = {
-  _id: string;
-  title: string;
-  description: string; // Added the description field 
-  questions: unknown;  
+  _id: string;          
+  code: string;         // New code field for the human-readable identifier
+  title: string;        
+  description: string;  // Description of the course
+  questions: unknown;   
 };
