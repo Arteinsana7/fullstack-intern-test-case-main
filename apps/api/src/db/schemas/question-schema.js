@@ -1,20 +1,18 @@
 const mongoose = require("mongoose");
-const courseSchema = require("./course-schema");
 const choiceSchema = require("./choice-schema");
-
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema(
   {
     course: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
+      ref: "Course", // Reference to the Course model
     },
     title: {
       type: String,
       required: true,
     },
-    choices: [choiceSchema],
+    choices: [choiceSchema], // Array of choices
   },
   { timestamps: true }
 );

@@ -1,5 +1,6 @@
 export type Course = {
   _id: string;
   title: string;
-  questions: unknown;
+  description: string; // Added the description field 
+  questions: unknown;  
 };

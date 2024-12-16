@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const questionSchema = require("../schemas/question-schema"); // Import the question schema
 
-const questionSchema = require("../schemas/question-schema");
+const Question = mongoose.model("Question", questionSchema);
 
-module.exports = mongoose.model("Question", questionSchema);
+// Export  Question model
+module.exports = Question;

@@ -8,7 +8,7 @@ import { Course } from "../../models/course.model";
 import { DataType } from "../../models/data-type.model";
 import * as S from './CourseList.styles'
 
-type CourseListItem = DataType<Pick<Course, '_id'>>
+type CourseListItem = DataType<Pick<Course, '_id' | 'title' | 'description'>>;  // Updated to include description
 
 const columns: ColumnsType<CourseListItem> = [
   {
@@ -21,6 +21,11 @@ const columns: ColumnsType<CourseListItem> = [
     dataIndex: 'title',
     key: 'title',
   },
+  {
+    title: 'Description',  // Added Description column
+    dataIndex: 'description',  // Data is fetched from the `description` field
+    key: 'description',
+  },
 ];
 
 function transformCoursesToDatasource(courses: Course[]): CourseListItem[] {
@@ -28,6 +33,7 @@ function transformCoursesToDatasource(courses: Course[]): CourseListItem[] {
     key: course._id,
     _id: course._id,
     title: course.title,
+    description: course.description,  // Include description in the transformed data
   }));
 }
 

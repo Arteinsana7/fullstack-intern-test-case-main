@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-
-const questionSchema = require("./question-schema");
-
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
@@ -10,11 +7,16 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    questions: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "Question",
-        default: [],
+    description: {
+      type: String,
+      maxlength: 256, // Limit description to 256 characters
     },
+    questions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Question", // Reference to the Question model
+      },
+    ],
   },
   { timestamps: true }
 );
