@@ -5,9 +5,9 @@ const courseService = require("../services/course-service");
  */
 const list = async (_req, res, next) => {
   try {
-    // Fetch all courses, including their description
+    // Fetch all courses, now only with _id, title, and description
     const courses = await courseService.getAll();
-    res.status(200).json(courses);
+    res.status(200).json(courses); // Send the filtered courses to the client
   } catch (err) {
     return next(err);
   }
@@ -18,14 +18,15 @@ const list = async (_req, res, next) => {
  */
 const get = async (req, res, next) => {
   try {
-    // Fetch a specific course by its ID, including description
+    // Fetch a specific course by its ID
     const course = await courseService.getById(req.params.courseId);
 
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    res.status(200).json(course);
+    // Send back only the specific course
+    res.status(200).json(course); // This should return a single course
   } catch (err) {
     return next(err);
   }
@@ -36,7 +37,6 @@ const get = async (req, res, next) => {
  */
 const create = async (req, res, next) => {
   try {
-    // Validate that the request body contains necessary fields, including description
     const { title, description } = req.body;
 
     if (!title || !description) {
@@ -45,10 +45,10 @@ const create = async (req, res, next) => {
         .json({ message: "Title and description are required" });
     }
 
-    // Create a new course with the provided details
+    // Create the new course
     const course = await courseService.create(req.body);
 
-    res.status(201).json(course);
+    res.status(201).json(course); // Send the created course
   } catch (err) {
     return next(err);
   }
@@ -69,7 +69,6 @@ const update = async (req, res, next) => {
       });
     }
 
-    // Update the course with the given ID using the provided data
     const course = await courseService.update(courseId, partialCourse);
 
     if (!course) {
@@ -89,7 +88,6 @@ const remove = async (req, res, next) => {
   try {
     const { courseId } = req.params;
 
-    // Remove the course by its ID
     const deletedCourse = await courseService.remove(courseId);
 
     if (!deletedCourse) {

@@ -14,9 +14,9 @@ router.get("/api/courses", (req, res, next) =>
 /**
  * Get a specific course by its ID
  */
-router.get("/api/courses/:courseId", (req, res, next) =>
-  courseController.get(req, res, next)
-);
+router.get("/api/courses/:courseId", (req, res, next) => {
+  courseController.get(req, res, next); // Calls the controller's get function
+});
 
 /**
  * Create a new course

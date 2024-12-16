@@ -2,10 +2,10 @@ const CourseModel = require("../db/models/course-model");
 
 /**
  * Retrieve the list of all courses
- * @returns {Promise<Array<Course>>} List of courses
+ * @returns {Promise<Array<Course>>}
  */
 const getAll = () => {
-  return CourseModel.find({});
+  return CourseModel.find({}).select("_id title description"); // Select only _id, title, and description
 };
 
 /**
@@ -14,13 +14,13 @@ const getAll = () => {
  * @returns {Promise<Course>} Course
  */
 const getById = (courseId) => {
-  return CourseModel.findById(courseId);
+  return CourseModel.findById(courseId).select("_id title description"); // Select only _id, title, and description, task 2
 };
 
 /**
  * Retrieve a course by its code
- * @param {String} courseCode Course code
- * @returns {Promise<Course>} Course
+ * @param {String} courseCode
+ * @returns {Promise<Course>}
  */
 const getByCode = (courseCode) => {
   return CourseModel.findOne({ code: courseCode });
@@ -28,8 +28,8 @@ const getByCode = (courseCode) => {
 
 /**
  * Create a new course
- * @param {Course} course Course properties
- * @returns {Promise<Course>} Created course
+ * @param {Course} course
+ * @returns {Promise<Course>}
  */
 const create = (course) => {
   const newCourse = new CourseModel({
@@ -41,9 +41,9 @@ const create = (course) => {
 
 /**
  * Update a course
- * @param {String} courseId Course ID
- * @param {Object} partialCourse Course properties to update
- * @returns {Promise<Course>} Updated course
+ * @param {String} courseId
+ * @param {Object} partialCourse
+ * @returns {Promise<Course>}
  */
 const update = async (courseId, partialCourse) => {
   await CourseModel.findOneAndUpdate(
@@ -61,7 +61,7 @@ const update = async (courseId, partialCourse) => {
 
 /**
  * Delete a course
- * @param {String} courseId Course ID
+ * @param {String} courseId
  */
 const remove = async (courseId) => {
   await CourseModel.deleteOne({ _id: courseId });

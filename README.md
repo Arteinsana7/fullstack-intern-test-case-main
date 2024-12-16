@@ -11,6 +11,7 @@ If you have any doubt or questions, don't hesitate to email morgan.fauvet@woocla
 ## Submission guidelines
 
 You can submit your work in different ways:
+
 - By sending us a link to a public repository or inviting us to a private repository on GitHub.
 - By sending us a zip file containing your project.
 
