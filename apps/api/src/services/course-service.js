@@ -19,6 +19,27 @@ const getAll = () => {
 };
 
 /**
+ * Search for courses by code or title
+ * @param {String} query Search query
+ * @returns {Promise<Array<Course>>}
+ */
+const search = async (query) => {
+  // Case-insensitive regex to search in both 'code' and 'title'
+  const regex = new RegExp(query, "i");
+
+  const courses = await CourseModel.find({
+    $or: [{ code: regex }, { title: regex }], // Match either code or title
+  }).select("_id title description code");
+
+  return courses.map((course) => ({
+    id: course._id, // MongoDB _id renamed to 'id'
+    code: course.code, // Human-readable course code
+    title: course.title,
+    description: course.description,
+  }));
+};
+
+/**
  * Retrieve a course by its ID
  * @param {String} courseId Course ID
  * @returns {Promise<Course>}
@@ -111,6 +132,7 @@ const remove = async (courseId) => {
 
 module.exports = {
   getAll,
+  search, // New method added
   getById,
   getByCode,
   create,

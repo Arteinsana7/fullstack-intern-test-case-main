@@ -13,6 +13,24 @@ const list = async (_req, res, next) => {
 };
 
 /**
+ * Search for courses by code or title
+ */
+const search = async (req, res, next) => {
+  try {
+    const { query } = req.query;
+
+    if (!query || query.trim() === "") {
+      return res.status(400).json({ message: "Query parameter is required" });
+    }
+
+    const courses = await courseService.search(query);
+    res.status(200).json(courses);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+/**
  * Get a specific course
  */
 const get = async (req, res, next) => {
@@ -66,6 +84,7 @@ const remove = async (req, res, next) => {
 
 module.exports = {
   list,
+  search, // New method added to the export, step 4
   get,
   create,
   update,

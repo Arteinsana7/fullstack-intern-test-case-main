@@ -12,6 +12,13 @@ router.get("/api/courses", (req, res, next) =>
 );
 
 /**
+ * Search for courses by code or title
+ */
+router.get("/api/courses/search", (req, res, next) =>
+  courseController.search(req, res, next)
+);
+
+/**
  * Get a specific course by its ID
  */
 router.get("/api/courses/:courseId", (req, res, next) => {

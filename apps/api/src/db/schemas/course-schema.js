@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose, { Schema as _Schema } from "mongoose";
 const { Schema } = mongoose;
 
 // Function to generate a random code (6 characters long)
@@ -30,7 +30,7 @@ const courseSchema = new Schema(
     },
     questions: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: _Schema.Types.ObjectId,
         ref: "Question",
       },
     ],
@@ -47,4 +47,4 @@ courseSchema.pre("save", function (next) {
 });
 
 // Export the schema
-module.exports = courseSchema;
+export default courseSchema;
