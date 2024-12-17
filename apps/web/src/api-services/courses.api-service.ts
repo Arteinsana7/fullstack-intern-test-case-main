@@ -5,8 +5,3 @@ export async function fetchCourses() {
   return res.json() as Promise<Course[]>;
 };
 
-// export const fetchCourses = async (): Promise<Course[]> => {
-//   const response = await fetch('/api/courses');
-//   const data = await response.json();
-//   return data;
-// };

@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 
 const router = express.Router();
 
@@ -26,10 +26,10 @@ router.use((error, _req, _res, _next) => {
   const message = error.message;
   const data = error.data;
 
-  response.status(status).json({
+  _res.status(status).json({
     message: message,
     data: data,
   });
 });
 
-module.exports = router;
+export default router;

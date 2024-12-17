@@ -1,8 +1,7 @@
-const express = require("express");
+import express from "express";
+import questionController from "../controllers/question-controller.js";
 
 const router = express.Router();
-
-const questionController = require("../controllers/question-controller");
 
 /**
  * Retrieve the questions list from a specific course
@@ -45,4 +44,4 @@ router.delete(
   }
 );
 
-module.exports = router;
+export default router;

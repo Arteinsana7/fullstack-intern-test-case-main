@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const questionSchema = require("../schemas/question-schema"); // Import the question schema
+import mongoose from "mongoose";
+import questionSchema from "../schemas/question-schema.js";
 
 const Question = mongoose.model("Question", questionSchema);
 
-// Export  Question model
-module.exports = Question;
+export default Question;

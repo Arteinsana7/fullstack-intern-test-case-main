@@ -1,4 +1,4 @@
-const courseService = require("../services/course-service");
+import * as courseService from "../services/course-service.js";
 
 /**
  * List courses
@@ -82,9 +82,9 @@ const remove = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export {
   list,
-  search, // New method added to the export, step 4
+  search, // new method to search, step 4
   get,
   create,
   update,

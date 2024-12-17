@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const choiceSchema = require("./choice-schema");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+import choiceSchema from "./choice-schema.js";
+const { Schema } = mongoose;
 
 const questionSchema = new Schema(
   {
@@ -17,4 +17,4 @@ const questionSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = questionSchema;
+export default questionSchema;

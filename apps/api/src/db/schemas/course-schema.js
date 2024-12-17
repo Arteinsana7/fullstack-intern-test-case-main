@@ -1,4 +1,5 @@
-import mongoose, { Schema as _Schema } from "mongoose";
+import mongoose from "mongoose";
+
 const { Schema } = mongoose;
 
 // Function to generate a random code (6 characters long)
@@ -30,7 +31,7 @@ const courseSchema = new Schema(
     },
     questions: [
       {
-        type: _Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Question",
       },
     ],

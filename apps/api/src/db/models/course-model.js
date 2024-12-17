@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const courseSchema = require("../schemas/course-schema").default; // Import the course schema
+import mongoose from "mongoose";
+import courseSchema from "../schemas/course-schema.js";
 
 // Create the Course model from the schema
 const Course = mongoose.model("Course", courseSchema);
 
-// Export  model
-module.exports = Course;
+// Export model
+export default Course;
