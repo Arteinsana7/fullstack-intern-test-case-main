@@ -11,7 +11,7 @@ const getAll = () => {
     .then((courses) =>
       courses.map((course) => ({
         id: course._id, // MongoDB _id renamed to 'id'
-        code: course.code, // Human-readable course code step 3
+        code: course.code, // Human-readable course code
         title: course.title,
         description: course.description,
       }))
@@ -87,7 +87,7 @@ const create = async (course) => {
     ...course,
   });
 
-  // Automatically save the code
+  // Automatically save the course
   const savedCourse = await newCourse.save();
   return {
     id: savedCourse._id, // MongoDB _id renamed to 'id'
@@ -105,6 +105,10 @@ const create = async (course) => {
  */
 const update = async (courseId, partialCourse) => {
   const { code, ...allowedUpdates } = partialCourse;
+
+  if (code) {
+    console.warn("Attempted to update 'code', which is not allowed.");
+  }
 
   const updatedCourse = await CourseModel.findByIdAndUpdate(
     courseId,
@@ -132,7 +136,7 @@ const remove = async (courseId) => {
 
 module.exports = {
   getAll,
-  search, // New method added
+  search,
   getById,
   getByCode,
   create,

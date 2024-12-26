@@ -88,14 +88,16 @@ export const CourseList = () => {
       />
 
       <Card>
-        <Table
-          columns={columns}
-          dataSource={coursesDataSource}
-          onRow={course => ({
-            onClick: () => handleCourseClick(course),
-          })}
-          scroll={{ y: '80vh' }}
-        />
+      <Table
+  columns={columns}
+  dataSource={coursesDataSource}
+  onRow={course => ({
+    onClick: () => handleCourseClick(course),
+    style: { cursor: "pointer" },  // Add visual feedback
+  })}
+  scroll={{ y: '80vh' }}
+/>
+
       </Card>
     </S.Wrapper>
   );

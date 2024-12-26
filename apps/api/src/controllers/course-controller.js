@@ -1,7 +1,7 @@
 const courseService = require("../services/course-service");
 
 /**
- * List courses
+ * List all courses
  */
 const list = async (_req, res, next) => {
   try {
@@ -31,11 +31,15 @@ const search = async (req, res, next) => {
 };
 
 /**
- * Get a specific course
+ * Get a specific course by its code
  */
-const get = async (req, res, next) => {
+const getByCode = async (req, res, next) => {
   try {
-    const course = await courseService.getById(req.params.courseId);
+    const course = await courseService.getByCode(req.params.courseCode);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
 
     res.status(200).json(course);
   } catch (err) {
@@ -44,12 +48,11 @@ const get = async (req, res, next) => {
 };
 
 /**
- * Create a course
+ * Create a new course
  */
 const create = async (req, res, next) => {
   try {
     const course = await courseService.create(req.body);
-
     res.status(201).json(course);
   } catch (err) {
     return next(err);
@@ -57,25 +60,35 @@ const create = async (req, res, next) => {
 };
 
 /**
- * Update a course
+ * Update an existing course by its code
  */
-const update = async (req, res, next) => {
+const updateByCode = async (req, res, next) => {
   try {
-    const course = await courseService.update(req.params.courseId, req.body);
+    // Resolve code to _id
+    const course = await courseService.getByCode(req.params.courseCode);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
 
-    res.status(200).json(course);
+    const updatedCourse = await courseService.update(course.id, req.body);
+    res.status(200).json(updatedCourse);
   } catch (err) {
     return next(err);
   }
 };
 
 /**
- * Remove a course
+ * Remove a course by its code
  */
-const remove = async (req, res, next) => {
+const removeByCode = async (req, res, next) => {
   try {
-    await courseService.remove(req.params.courseId);
+    // Resolve code to _id
+    const course = await courseService.getByCode(req.params.courseCode);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
 
+    await courseService.remove(course.id);
     res.status(204).json();
   } catch (err) {
     return next(err);
@@ -84,9 +97,9 @@ const remove = async (req, res, next) => {
 
 module.exports = {
   list,
-  search, // New method added to the export, step 4
-  get,
+  search,
+  getByCode,
   create,
-  update,
-  remove,
+  updateByCode,
+  removeByCode,
 };
