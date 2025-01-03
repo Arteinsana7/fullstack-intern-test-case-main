@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 export const DetailCard = styled(Card)`
   margin-top: 20px;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 5px;
 `;
 
 export const BackButton = styled(Button)`

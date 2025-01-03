@@ -65,7 +65,8 @@ const getById = (courseId) => {
  */
 const getByCode = (courseCode) => {
   return CourseModel.findOne({ code: courseCode })
-    .select("_id title description code")
+    .select("_id title description code questions") // Select the questions field
+    .populate("questions", "_id title") // Populate the questions with _id and title
     .then((course) => {
       if (!course) return null;
       return {
@@ -73,6 +74,10 @@ const getByCode = (courseCode) => {
         code: course.code, // Human-readable course code
         title: course.title,
         description: course.description,
+        questions: course.questions.map((q) => ({
+          id: q._id, // MongoDB _id of the question
+          title: q.title, // Title of the question
+        })),
       };
     });
 };

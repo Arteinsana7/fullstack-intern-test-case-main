@@ -1,7 +1,14 @@
+// Define the Question type
+export type Question = {
+  id: string;  // The unique identifier for each question
+  title: string;  // The question's title or text
+};
+
+// Define the Course type, updating questions to be an array of Question
 export type Course = {
-  _id: string;          
-  code: string;         // New code field for the human-readable identifier
-  title: string;        
+  _id: string;  // Unique identifier for the course
+  code: string;  // Human-readable code for the course
+  title: string;  // The title of the course
   description: string;  // Description of the course
-  questions: unknown;   
+  questions: Question[];  // Array of questions for the course
 };

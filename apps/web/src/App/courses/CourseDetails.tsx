@@ -1,11 +1,20 @@
-import { Spin, Typography, Divider } from 'antd';
+import { Spin, Typography, Divider, Table } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchCourseByCode } from '../../api-services/courses.api-service';
-import { Course } from '../../models/course.model';
-import * as S from './CourseDetails.styles';  // Import your styled components
+import { Course } from '../../models/course.model';  // Import the Course type (no need for Question import)
+import * as S from './CourseDetails.styles';
 
 const { Title, Paragraph } = Typography;
+
+// Define the table columns for the questions
+const columns = [
+  {
+    title: 'Question Title',
+    dataIndex: 'title',
+    key: 'title',
+  },
+];
 
 export const CourseDetails = () => {
   const { code } = useParams();
@@ -22,9 +31,10 @@ export const CourseDetails = () => {
         if (code) {
           const courseData = await fetchCourseByCode(code);
           setCourse(courseData);
+          console.log('Fetched course data:', courseData);  // Log the data to check structure
         }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (err) {
+        console.error('Error fetching course data:', err);  // Log the error to the console
         setError('Failed to load course details. Please try again later.');
       } finally {
         setLoading(false);
@@ -46,9 +56,15 @@ export const CourseDetails = () => {
     return <div style={{ textAlign: 'center' }}>Course not found</div>;
   }
 
+  // Now TypeScript knows that `course.questions` is an array of `Question` objects
+  const questionsDataSource = course.questions.map((question) => ({
+    key: question.id,  // Use the question's ID as a unique key
+    title: question.title,
+  }));
+
   return (
     <S.Wrapper>
-       <S.BackButton type="primary" onClick={() => navigate('/courses')}>
+      <S.BackButton type="primary" onClick={() => navigate('/courses')}>
         Back to Courses
       </S.BackButton>
       <S.DetailCard>
@@ -58,22 +74,20 @@ export const CourseDetails = () => {
 
         <Divider />
         <Title level={4}>Questions</Title>
-        {course.questions && Array.isArray(course.questions) ? (
-          course.questions.length > 0 ? (
-            <ul>
-              {course.questions.map((question, index) => (
-                <li key={index}>{question}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No questions available for this course</p>
-          )
+
+        {course.questions && course.questions.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={questionsDataSource}
+            pagination={false}  // Disable pagination
+            scroll={{ y: '50vh' }}  // Optional: Add vertical scroll for a large number of questions
+            bordered
+            rowKey="key"  // Ensure each row has a unique key
+          />
         ) : (
-          <p>Questions data is not in the expected format</p>
+          <p>No questions available for this course</p>
         )}
       </S.DetailCard>
-
-     
     </S.Wrapper>
   );
 };
