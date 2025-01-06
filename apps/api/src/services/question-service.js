@@ -44,18 +44,57 @@ const create = async (courseId, question) => {
  * @returns {Promise<Question>} Updated question
  */
 const update = async (questionId, partialQuestion) => {
-  await QuestionModel.findOneAndUpdate(
-    { _id: questionId },
-    {
-      $set: {
-        ...partialQuestion,
-      },
-      upsert: true,
-    }
-  );
+  try {
+    const { title, choices } = partialQuestion;
 
-  return QuestionModel.findById(questionId);
+    // Validate choices if necessary
+    if (choices && Array.isArray(choices)) {
+      choices.forEach((choice) => {
+        if (
+          typeof choice.text !== "string" ||
+          typeof choice.isCorrect !== "boolean"
+        ) {
+          throw new Error("Invalid choice format");
+        }
+      });
+    }
+
+    // Update the question using findOneAndUpdate
+    const updatedQuestion = await QuestionModel.findOneAndUpdate(
+      { _id: questionId },
+      { $set: { title, choices } }, // Explicitly update only the title and choices
+      { new: true } // Return the updated document
+    );
+
+    // If no question was found, throw an error
+    if (!updatedQuestion) {
+      throw new Error(`Question with ID ${questionId} not found`);
+    }
+
+    return updatedQuestion;
+  } catch (err) {
+    throw err; // Rethrow the error to be handled by the controller
+  }
 };
+// const update = async (questionId, partialQuestion) => {
+//   try {
+//     // Find the question by ID and update it with the provided fields
+//     const updatedQuestion = await QuestionModel.findOneAndUpdate(
+//       { _id: questionId },
+//       { $set: partialQuestion }, // Set only the fields that are passed
+//       { new: true } // Return the updated document
+//     );
+
+//     // If no question was found, throw an error
+//     if (!updatedQuestion) {
+//       throw new Error(`Question with ID ${questionId} not found`);
+//     }
+
+//     return updatedQuestion;
+//   } catch (err) {
+//     throw err; // Rethrow the error to be handled by the controller
+//   }
+// };
 
 /**
  * Delete a question

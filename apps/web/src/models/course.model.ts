@@ -2,6 +2,7 @@
 export type Question = {
   id: string;  // The unique identifier for each question
   title: string;  // The question's title or text
+  choices?: { text: string, isCorrect: boolean }[];
 };
 
 // Define the Course type, updating questions to be an array of Question

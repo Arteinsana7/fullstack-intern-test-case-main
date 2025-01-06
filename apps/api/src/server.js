@@ -11,14 +11,21 @@ const defaultRouter = require("./routers/default-router");
 
 app.use(bodyParser.json());
 
+// Set headers for CORS handling
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Allow requests from any domain (or restrict to your front-end URL)
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  ); // Allowed HTTP methods
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allowed headers
   res.setHeader("Content-Type", "application/json");
+
+  // Allow preflight requests (OPTIONS method) for CORS
+  if (req.method === "OPTIONS") {
+    return res.status(200).end(); // Respond immediately for OPTIONS requests
+  }
+
   next();
 });
 

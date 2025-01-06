@@ -1,5 +1,5 @@
 node_modules/
 apps/api/node_modules
 .idea/
-.history/
+.history
 .DS_Store

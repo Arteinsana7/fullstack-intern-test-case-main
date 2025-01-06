@@ -1,14 +1,17 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";  // Removed Navigate
-
-import App from "./App.tsx";
-import { CourseList } from "./courses/CourseList.tsx";
-import { CourseDetails } from "./courses/CourseDetails.tsx"; 
+import { createBrowserRouter, createRoutesFromElements, Route, Navigate } from 'react-router-dom'; 
+import App from './App.tsx';
+import { CourseList } from './courses/CourseList.tsx';
+import { CourseDetails } from './courses/CourseDetails.tsx';
 
 export const Router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<App />} path="/">
+      {/* Redirect root (/) to /courses */}
+      <Route path="/" element={<Navigate to="courses" replace />} />
+      {/* Courses listing */}
       <Route element={<CourseList />} path="courses" />
-      <Route element={<CourseDetails />} path="courses/:code" /> {/* Url route with code */}
+      {/* Course details by code */}
+      <Route element={<CourseDetails />} path="courses/:code" />
     </Route>
   )
 );

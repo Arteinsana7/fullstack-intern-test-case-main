@@ -91,13 +91,13 @@ export const CourseList = () => {
       <Table
   columns={columns}
   dataSource={coursesDataSource}
+  rowKey="key"  // Ensure the row key is explicitly set to the unique 'key' from dataSource
   onRow={course => ({
     onClick: () => handleCourseClick(course),
-    style: { cursor: "pointer" },  // Add visual feedback
+    style: { cursor: "pointer" },
   })}
   scroll={{ y: '80vh' }}
 />
-
       </Card>
     </S.Wrapper>
   );
