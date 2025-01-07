@@ -5,6 +5,7 @@
   "author": "Wooclap",
   "license": "ISC",
   "scripts": {
+    "format": "prettier --write .",
     "start:api": "npm start --prefix apps/api",
     "start:web": "npm start --prefix apps/web",
     "seed": "npm run seed --prefix apps/api",
@@ -12,5 +13,8 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
   }
 }

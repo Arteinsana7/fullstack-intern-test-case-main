@@ -3,7 +3,7 @@ import { Input } from "antd";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  padding: 10vh 20vw 0;
+  padding: 10vh 10vw 0;
   height: 100%;
 `;
 
